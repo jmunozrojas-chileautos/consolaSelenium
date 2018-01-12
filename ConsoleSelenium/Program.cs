@@ -60,20 +60,28 @@ namespace ConsoleSelenium
                     IList<IWebElement> qtipocontratos =  driver.FindElements(By.Name("tipocontrato"));
                     qtipocontratos.ElementAt(0).Click();
 
-
+                    
                     driver.FindElement(By.ClassName("btn-simula-form")).Click();
-                    //Console.ReadKey();
+                    driver.Manage().Timeouts().ImplicitWait = new TimeSpan(10);
 
-                    if (driver.FindElement(By.TagName("p")).Text.Contains("Nos comunicaremos al mail informado"))
+                    try
                     {
-                        //cambio el estado del lead
-                        SP_U_MarcaLeads_Scotiabank_Result resultado = context.SP_U_MarcaLeads_Scotiabank(lead.rut, lead.telefono, lead.email, lead.monto_credito, lead.nro_cuotas, lead.valor_cuota).FirstOrDefault();
-                        if (resultado != null && resultado.actualizado == 1)
+                        if (driver.FindElement(By.TagName("p")).Text.Contains("Nos comunicaremos al mail informado"))
                         {
-                            Console.WriteLine("Rut:" + lead.rut + ", Teléfono:" + lead.telefono+", email:" + lead.email + ", monto crédito:" + lead.monto_credito +
-                                ", cuotas:" + lead.nro_cuotas + ", valor cuota:" + lead.valor_cuota);
+                            //cambio el estado del lead
+                            SP_U_MarcaLeads_Scotiabank_Result resultado = context.SP_U_MarcaLeads_Scotiabank(lead.rut, lead.telefono, lead.email, lead.monto_credito, lead.nro_cuotas, lead.valor_cuota).FirstOrDefault();
+                            if (resultado != null && resultado.actualizado == 1)
+                            {
+                                Console.WriteLine("Rut:" + lead.rut + ", Teléfono:" + lead.telefono + ", email:" + lead.email + ", monto crédito:" + lead.monto_credito +
+                                    ", cuotas:" + lead.nro_cuotas + ", valor cuota:" + lead.valor_cuota);
+                            }
                         }
                     }
+                    catch (NoSuchElementException e)
+                    {
+                        Console.WriteLine("Error Message = {0}", e.Message);
+                    }
+                    
 
                 }
             }
