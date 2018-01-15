@@ -7,6 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using EF1;
 using OpenQA.Selenium.PhantomJS;
+using OpenQA.Selenium.Support.UI;
 
 namespace ConsoleSelenium
 {
@@ -67,7 +68,10 @@ namespace ConsoleSelenium
 
                     
                     driver.FindElement(By.ClassName("btn-simula-form")).Click();
-                    driver.Manage().Timeouts().ImplicitWait = new TimeSpan(10);
+                    //driver.Manage().Timeouts().ImplicitWait = new TimeSpan(30);
+
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    IWebElement myDynamicElement = wait.Until(d => d.FindElement(By.TagName("p")));
 
                     try
                     {
