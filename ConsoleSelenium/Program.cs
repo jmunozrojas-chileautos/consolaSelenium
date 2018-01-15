@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using EF1;
+using OpenQA.Selenium.PhantomJS;
 
 namespace ConsoleSelenium
 {
@@ -13,7 +14,11 @@ namespace ConsoleSelenium
     {
         static void Main(string[] args)
         {
-            IWebDriver driver = new FirefoxDriver();
+            //IWebDriver driver = new FirefoxDriver();
+            var driverService = PhantomJSDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+
+            IWebDriver driver = new PhantomJSDriver(driverService);
 
             Console.WriteLine("Datos procesados");
             Console.WriteLine("-----------------");
