@@ -95,7 +95,6 @@ namespace ConsoleSelenium
                 }
             }
             driver.Quit();
-            Console.ReadKey();
         }
     }
 }
