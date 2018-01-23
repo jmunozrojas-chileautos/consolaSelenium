@@ -15,7 +15,8 @@ namespace ConsoleSelenium
     {
         static void Main(string[] args)
         {
-            //IWebDriver driver = new FirefoxDriver();
+            bool Cerrado = false;
+            bool procesado = true;
             var driverService = PhantomJSDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
 
@@ -68,10 +69,7 @@ namespace ConsoleSelenium
 
                     
                     driver.FindElement(By.ClassName("btn-simula-form")).Click();
-                    //driver.Manage().Timeouts().ImplicitWait = new TimeSpan(30);
-
-                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                    IWebElement myDynamicElement = wait.Until(d => d.FindElement(By.TagName("p")));
+                    driver.Manage().Timeouts().ImplicitWait = new TimeSpan(15);
 
                     try
                     {
@@ -88,10 +86,20 @@ namespace ConsoleSelenium
                     }
                     catch (NoSuchElementException e)
                     {
-                        Console.WriteLine("Error Message = {0}", e.Message);
+                        Console.WriteLine("No se procesó (por ahora)");
+                        Console.WriteLine("Rut:" + lead.rut + ", Teléfono:" + lead.telefono + ", email:" + lead.email + ", monto crédito:" + lead.monto_credito +
+                                    ", cuotas:" + lead.nro_cuotas + ", valor cuota:" + lead.valor_cuota);
+                        driver.Quit();
+                        Cerrado = true;
+                        
                     }
-                    
-
+                    finally
+                    {
+                        if (Cerrado)
+                        {
+                            driver = new PhantomJSDriver(driverService);
+                        }
+                    }
                 }
             }
             driver.Quit();
