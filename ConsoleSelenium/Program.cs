@@ -16,7 +16,7 @@ namespace ConsoleSelenium
         static void Main(string[] args)
         {
             bool Cerrado = false;
-            bool procesado = true;
+            
             var driverService = PhantomJSDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
 
@@ -84,7 +84,7 @@ namespace ConsoleSelenium
                             }
                         }
                     }
-                    catch (NoSuchElementException e)
+                    catch (NoSuchElementException)
                     {
                         Console.WriteLine("No se procesó (por ahora)");
                         Console.WriteLine("Rut:" + lead.rut + ", Teléfono:" + lead.telefono + ", email:" + lead.email + ", monto crédito:" + lead.monto_credito +
